@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imperial Logistics - Modern Supply Chain Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #f5f5f5;
+            --text: #333333;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+
+        p { margin-bottom: 1rem; }
+
+        /* Layout */
+        .container {
+            width: min(90%, 1200px);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .flex {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: transparent;
+            transition: var(--transition);
+            padding: 1rem 0;
+        }
+
+        .header.scrolled {
+            background: var(--secondary);
+            box-shadow: var(--shadow);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: var(--secondary);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--accent);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards 0.3s;
+        }
+
+        .hero-text {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards 0.6s;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards 0.9s;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 8rem 0;
+            background: var(--accent);
+            position: relative;
+        }
+
+        .services::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: var(--secondary);
+            clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .services-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card:hover * {
+            color: var(--secondary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 0;
+            background: var(--secondary);
+        }
+
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            margin-bottom: 1rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 6rem 0;
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 0;
+            background: var(--accent);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--secondary);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: var(--secondary);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            color: var(--secondary);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--secondary);
+                padding: 2rem;
+                transition: var(--transition);
+            }
+
+            .mobile-menu.active {
+                right: 0;
+            }
+
+            .mobile-menu .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 2rem;
+            }
+
+            .hero::before {
+                width: 100%;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 85%);
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-4 { margin-bottom: 4rem; }
+        .section-title { 
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202024-11-03%20at%2021.40.00-tt2FkAO0st7WnfYpI5wuxVZbZq0IfI.jpeg" alt="Imperial Logistics Logo" class="logo-img">
+                <span class="logo-text">Imperial Logistics</span>
+            </a>
+            <button class="mobile-menu-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Redefining Logistics Excellence</h1>
+                    <p class="hero-text">Experience seamless supply chain solutions with cutting-edge technology and unmatched reliability. We connect businesses across India and beyond.</p>
+                    <div class="cta-group">
+                        <a href="#contact" class="btn btn-primary">Get Started</a>
+                        <a href="#services" class="btn btn-secondary">Explore Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title text-center">Our Services</h2>
+                <div class="services-grid grid">
+                    <div class="service-card">
+                        <div class="service-icon">🚛</div>
+                        <h3>Fleet Management</h3>
+                        <p>State-of-the-art fleet tracking and management solutions for optimal performance and reliability.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <h3>Global Logistics</h3>
+                        <p>Comprehensive international shipping and logistics services connecting businesses worldwide.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📦</div>
+                        <h3>Warehousing</h3>
+                        <p>Modern warehousing facilities with advanced inventory management systems.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">⚡</div>
+                        <h3>Express Delivery</h3>
+                        <p>Fast and reliable delivery services for time-sensitive shipments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title text-center">Why Choose Us</h2>
+                <div class="features-grid grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Precision Tracking</h3>
+                        <p>Real-time tracking and monitoring for complete visibility of your shipments.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3 class="feature-title">Secure Transport</h3>
+                        <p>Advanced security measures ensuring the safety of your cargo.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Quick Response</h3>
+                        <p>24/7 customer support and rapid response to your logistics needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid grid">
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Fleet Size</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>50+</h3>
+                        <p>Cities Covered</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>1000+</h3>
+                        <p>Happy Clients</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title text-center">Contact Us</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" class="form-input" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid grid">
+                <div>
+                    <h3>Imperial Logistics</h3>
+                    <p>Redefining logistics excellence with innovation and reliability.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📱</a>
+                        <a href="#" class="social-link">💼</a>
+                        <a href="#" class="social-link">📸</a>
+                    </div>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">About Us</a></li>
+                        <li><a href="#" class="footer-link">Services</a></li>
+                        <li><a href="#" class="footer-link">Contact</a></li>
+                        <li><a href="#" class="footer-link">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Fleet Management</a></li>
+                        <li><a href="#" class="footer-link">Global Logistics</a></li>
+                        <li><a href="#" class="footer-link">Warehousing</a></li>
+                        <li><a href="#" class="footer-link">Express Delivery</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center" style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1)">
+                <p>&copy; 2024 Imperial Logistics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header Scroll Effect
+        const header = document.querySelector('.header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('.nav');
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('mobile-menu-active');
+        });
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Service Cards Animation
+        const serviceCards = document.querySelectorAll('.service-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        serviceCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+
+        // Form Submission Handler
+        const form = document.querySelector('.contact-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you for your message. We will get back to you soon!');
+            form.reset();
+        });
+
+        // Stats Counter Animation
+        const stats = document.querySelectorAll('.stat-item h3');
+        const statsSection = document.querySelector('.stats');
+        let animated = false;
+
+        function animateStats() {
+            stats.forEach(stat => {
+                const target = parseInt(stat.innerText);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        clearInterval(timer);
+                        stat.innerText = target + (stat.innerText.includes('+') ? '+' : '');
+                    } else {
+                        stat.innerText = Math.floor(current) + (stat.innerText.includes('+') ? '+' : '');
+                    }
+                }, 20);
+            });
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !animated) {
+                animateStats();
+                animated = true;
+            }
+        }, { threshold: 0.5 });
+
+        statsObserver.observe(statsSection);
+
+        // Parallax Effect for Hero Section
+        const hero = document.querySelector('.hero');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            hero.style.backgroundPositionY = scrolled * 0.5 + 'px';
+        });
+    </script>
+</body>
+</html>
